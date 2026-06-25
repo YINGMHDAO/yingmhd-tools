@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+/* ====== 主题: CSS 变量 ====== */
+:root[data-theme='dark'] {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --bg-tertiary: #2d2d30;
+  --bg-hover: #2a2d2e;
+  --bg-active: #37373d;
+  --text-primary: #cccccc;
+  --text-secondary: #858585;
+  --text-muted: #6a6a6a;
+  --border-color: #3e3e42;
+  --accent: #007acc;
+  --accent-hover: #1a8ad4;
+  --danger: #f44747;
+  --danger-hover: #d32f2f;
+  --success: #4ec9b0;
+  --launcher-bg: rgba(30, 30, 30, 0.96);
+  --scrollbar-thumb: #424242;
+  --scrollbar-track: transparent;
+}
+
+:root[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f3f3;
+  --bg-tertiary: #e8e8e8;
+  --bg-hover: #e8e8e8;
+  --bg-active: #d6d6d6;
+  --text-primary: #1e1e1e;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --border-color: #d4d4d4;
+  --accent: #007acc;
+  --accent-hover: #005a9e;
+  --danger: #d32f2f;
+  --danger-hover: #b71c1c;
+  --success: #388e3c;
+  --launcher-bg: rgba(255, 255, 255, 0.96);
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-track: transparent;
+}
+
+/* ====== 全局样式 ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+/* 防止拖拽选中 */
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Monaco Editor 容器 */
+.monaco-editor-container {
+  height: 100%;
+  min-height: 200px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}

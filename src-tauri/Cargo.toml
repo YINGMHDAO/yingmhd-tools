@@ -1,0 +1,27 @@
+[package]
+name = "yingmhd-tools"
+version = "0.1.0"
+description = "YINGMHD Tools - Developer Launcher"
+authors = ["yingmhd"]
+license = "MIT"
+repository = ""
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-store = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-single-instance = "2"
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+log = "0.4"
+tauri-plugin-log = "2"
+sysinfo = "0.31"
