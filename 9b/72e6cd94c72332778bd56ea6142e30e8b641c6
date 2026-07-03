@@ -1,0 +1,74 @@
+src/hooks/useTheme.ts
+  s_a0f2840e11a513::t_37f51231a6be85 3-8,12,15,21-22,25,30-46,48-50,54,61
+src/pages/JsonEditor.tsx
+  s_a0f2840e11a513::t_69066c32b05c89 116-119
+src-tauri/capabilities/default.json
+  s_a0f2840e11a513::t_2604f2b133400e 12
+src/pages/PortManager.tsx
+  s_a0f2840e11a513::t_47d917ebe3de82 62-65
+src/index.css
+  s_a0f2840e11a513::t_4de21c53280776 56,60-61,68-74
+  s_a0f2840e11a513::t_5839df2b6dc3a8 41-43
+  s_a0f2840e11a513::t_de90f04f24cf54 19-21
+src/types/index.ts
+  s_a0f2840e11a513::t_4366246e0c4d31 59-61
+src/components/ui/button.tsx
+  s_a0f2840e11a513::t_8b9608ae7fddf2 17
+  s_a0f2840e11a513::t_c7b58a4f26f740 21
+  s_a0f2840e11a513::t_dc6c1a430a4719 5
+src/App.tsx
+  s_a0f2840e11a513::t_7712fdc34bd14a 17
+  s_a0f2840e11a513::t_c9950b01f5f1df 34-35,39-40
+  s_a0f2840e11a513::t_f21e5a4ae8ec0e 33,36-38,41
+src/stores/appStore.ts
+  s_a0f2840e11a513::t_b61d39247bb71a 37-38
+  s_a0f2840e11a513::t_244b9270ba8e4a 24-26
+  s_a0f2840e11a513::t_8ca25c56856d70 2,6,13
+src/launcher/Launcher.tsx
+  s_a0f2840e11a513::t_741d55075598bd 10
+  s_a0f2840e11a513::t_0b254d0f87d43f 42-49,52-60
+  s_a0f2840e11a513::t_48a2745fefd7d4 95
+  s_a0f2840e11a513::t_b96cf2c6741db1 93
+src-tauri/src/tray/tray.rs
+  s_a0f2840e11a513::t_4d811012aab297 19-21,23-24
+src-tauri/src/commands/shortcut.rs
+  s_a0f2840e11a513::t_ce5a94b9fc5d47 36-40,42-45,47-50,52,54-63
+src-tauri/src/lib.rs
+  s_a0f2840e11a513::t_266f32d0e57cb9 7
+  s_a0f2840e11a513::t_1e6f90353e3ed2 56-59,62-84,87,94
+  s_a0f2840e11a513::t_7154f924f31f21 60
+src-tauri/Cargo.toml
+  s_a0f2840e11a513::t_14fcfbf83f3d12 19
+src/launcher/LauncherInput.tsx
+  s_a0f2840e11a513::t_031a273275659f 16-19
+src/components/Layout.tsx
+  s_a0f2840e11a513::t_b0ff176e634d9e 10
+src/pages/Settings.tsx
+  s_a0f2840e11a513::t_61867a3252d880 8,12
+  s_a0f2840e11a513::t_b03e8450339112 117-129,131-141,143,146-151,154,157-164,167-172,175-182,184-185,187-202,204-215,218-223,226
+  s_a0f2840e11a513::t_fc65c07edebe4a 130,142,144-145
+  s_a0f2840e11a513::t_3df519743ffbc4 2
+  s_a0f2840e11a513::t_8d9c87028315d7 183,186
+src/launcher/LauncherResults.tsx
+  s_a0f2840e11a513::t_29d54e3b922f99 83-84
+  s_a0f2840e11a513::t_44446db7f76b60 18,23,31,33
+  s_a0f2840e11a513::t_eff8d646707631 65-66
+src-tauri/tauri.conf.json
+  s_a0f2840e11a513::t_85b474e3f40694 13,24-25,29-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "ai_metrics_version": "1.5.3",
+  "base_commit_sha": "9b72e6cd94c72332778bd56ea6142e30e8b641c6",
+  "prompts": {},
+  "sessions": {
+    "s_a0f2840e11a513": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "32aee6f7-9d5a-4e15-af3d-21eb6d892c8a",
+        "model": "claude-fable-5"
+      },
+      "human_author": "YINGMHD <1942506359@qq.com>"
+    }
+  }
+}
