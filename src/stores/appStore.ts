@@ -1,14 +1,16 @@
 import { create } from 'zustand';
-import type { Theme, Toast, ToastType } from '@/types';
+import type { Theme, ThemeMode, Toast, ToastType } from '@/types';
 
 interface AppState {
   theme: Theme;
+  themeMode: ThemeMode;
   shortcut: string;
   shortcutEnabled: boolean;
   shortcutConflict: boolean;
   toasts: Toast[];
 
   setTheme: (theme: Theme) => void;
+  setThemeMode: (mode: ThemeMode) => void;
   setShortcut: (shortcut: string) => void;
   setShortcutEnabled: (enabled: boolean) => void;
   setShortcutConflict: (conflict: boolean) => void;
@@ -19,7 +21,9 @@ interface AppState {
 let toastId = 0;
 
 export const useAppStore = create<AppState>((set) => ({
-  theme: 'dark',
+  // 初始值按系统外观计算，避免启动时主题闪烁
+  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+  themeMode: 'system',
   shortcut: '',
   shortcutEnabled: true,
   shortcutConflict: false,
@@ -29,6 +33,8 @@ export const useAppStore = create<AppState>((set) => ({
     document.documentElement.setAttribute('data-theme', theme);
     set({ theme });
   },
+
+  setThemeMode: (themeMode) => set({ themeMode }),
 
   setShortcut: (shortcut) => set({ shortcut }),
 

@@ -16,8 +16,12 @@ pub fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
         .item(&quit_item)
         .build()?;
 
+    // 使用专用托盘图标；macOS 上作为模板图标渲染，自动适配菜单栏深浅色
+    let icon = tauri::image::Image::from_bytes(include_bytes!("../../icons/tray-icon.png"))?;
+
     let _tray = TrayIconBuilder::new()
-        .icon(app.default_window_icon().unwrap().clone())
+        .icon(icon)
+        .icon_as_template(true)
         .menu(&menu)
         .tooltip("YINGMHD Tools")
         .on_menu_event(move |app, event| {

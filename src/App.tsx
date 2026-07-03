@@ -14,6 +14,7 @@ import type { ShortcutConflictEvent } from '@/types';
 
 export default function App() {
   const theme = useAppStore((s) => s.theme);
+  const themeMode = useAppStore((s) => s.themeMode);
   const [conflictEvent, setConflictEvent] = useState<ShortcutConflictEvent | null>(null);
   const [showConflict, setShowConflict] = useState(false);
 
@@ -29,7 +30,15 @@ export default function App() {
   // 设置 data-theme 属性
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    // 同步原生窗口外观（vibrancy 玻璃材质）；跟随系统时传 null 交还给系统
+    import('@tauri-apps/api/window')
+      .then(({ getCurrentWindow }) => {
+        getCurrentWindow()
+          .setTheme(themeMode === 'system' ? null : themeMode)
+          .catch(() => {});
+      })
+      .catch(() => {});
+  }, [theme, themeMode]);
 
   return (
     <HashRouter>

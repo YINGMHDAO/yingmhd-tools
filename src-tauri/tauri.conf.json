@@ -10,6 +10,7 @@
     "beforeBuildCommand": "npm run build"
   },
   "app": {
+    "macOSPrivateApi": true,
     "windows": [
       {
         "title": "YINGMHD Tools",
@@ -20,20 +21,21 @@
         "minHeight": 300,
         "center": true,
         "resizable": true,
-        "decorations": true,
+        "decorations": false,
+        "transparent": true,
         "visible": true,
         "closable": true,
         "alwaysOnTop": false,
-        "skipTaskbar": false
+        "skipTaskbar": false,
+        "windowEffects": {
+          "effects": ["underWindowBackground", "acrylic"],
+          "state": "active",
+          "radius": 12
+        }
       }
     ],
     "security": {
       "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob: data:; font-src 'self' data:; img-src 'self' data:"
-    },
-    "trayIcon": {
-      "id": "main-tray",
-      "iconPath": "icons/tray-icon.png",
-      "tooltip": "YINGMHD Tools"
     }
   },
   "bundle": {

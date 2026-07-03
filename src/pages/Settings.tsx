@@ -1,14 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Keyboard } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { useTheme } from '@/hooks/useTheme';
+import { cn } from '@/utils/cn';
 
 export function Settings() {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, themeMode, setMode } = useTheme();
   const { shortcut, setShortcut, setShortcutEnabled, shortcutEnabled, shortcutConflict } =
     useAppStore();
   const [recording, setRecording] = useState(false);
@@ -113,84 +114,116 @@ export function Settings() {
         <span className="text-sm font-semibold text-[var(--text-primary)]">设置</span>
       </header>
 
-      <div className="flex-1 overflow-auto p-6 space-y-6 max-w-lg">
-        {/* 主题 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-sm font-medium text-[var(--text-primary)]">深色主题</div>
-            <div className="text-xs text-[var(--text-muted)] mt-0.5">
-              当前: {theme === 'dark' ? '深色模式' : '浅色模式'}
+      <div className="flex-1 overflow-auto p-6 space-y-5 max-w-lg">
+        {/* 外观 */}
+        <section>
+          <div className="text-xs font-medium text-[var(--text-muted)] px-1 mb-1.5">外观</div>
+          <div className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] divide-y divide-[var(--border-color)]">
+            <div className="flex items-center justify-between px-4 py-3">
+              <div>
+                <div className="text-sm font-medium text-[var(--text-primary)]">主题</div>
+                <div className="text-xs text-[var(--text-muted)] mt-0.5">
+                  当前: {theme === 'dark' ? '深色' : '浅色'}
+                  {themeMode === 'system' ? '（跟随系统）' : ''}
+                </div>
+              </div>
+              <div className="flex gap-1 rounded-md bg-[var(--bg-tertiary)] p-1 border border-[var(--border-color)]">
+                {(
+                  [
+                    ['system', '跟随系统'],
+                    ['light', '浅色'],
+                    ['dark', '深色'],
+                  ] as const
+                ).map(([mode, label]) => (
+                  <button
+                    key={mode}
+                    onClick={() => setMode(mode)}
+                    className={cn(
+                      'px-2.5 py-1 text-xs rounded border transition-colors',
+                      themeMode === mode
+                        ? 'bg-[var(--accent)] border-[var(--accent)] text-white shadow-sm'
+                        : 'bg-[var(--bg-secondary)] border-[var(--border-color)] text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]',
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-          <Switch checked={theme === 'dark'} onCheckedChange={() => toggleTheme()} />
-        </div>
+        </section>
 
         {/* 快捷键 */}
-        <div className="p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] space-y-3">
-          <div className="flex items-center gap-2">
-            <Keyboard size={16} className="text-[var(--accent)]" />
-            <span className="text-sm font-medium text-[var(--text-primary)]">全局快捷键</span>
-          </div>
+        <section>
+          <div className="text-xs font-medium text-[var(--text-muted)] px-1 mb-1.5">快捷键</div>
+          <div className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] divide-y divide-[var(--border-color)]">
+            <div className="flex items-center justify-between px-4 py-3">
+              <span className="text-sm text-[var(--text-primary)]">当前快捷键</span>
+              <span className="text-sm font-mono text-[var(--text-primary)] bg-[var(--bg-tertiary)] px-2 py-0.5 rounded">
+                {shortcut || '...'}
+              </span>
+            </div>
 
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-[var(--text-secondary)]">当前快捷键</div>
-            <div className="text-sm font-mono text-[var(--text-primary)] bg-[var(--bg-tertiary)] px-2 py-0.5 rounded">
-              {shortcut || '...'}
+            <div className="flex items-center justify-between px-4 py-3">
+              <span className="text-sm text-[var(--text-primary)]">启用快捷键</span>
+              <Switch
+                checked={shortcutEnabled}
+                onCheckedChange={(checked) => setShortcutEnabled(checked)}
+              />
+            </div>
+
+            <div className="px-4 py-3 space-y-2">
+              {shortcutConflict && (
+                <div className="text-xs text-[var(--danger)] bg-red-900/10 px-3 py-1.5 rounded">
+                  当前快捷键可能与其他应用冲突
+                </div>
+              )}
+
+              <div className="flex gap-2">
+                <Button size="xs" variant="outline" onClick={startRecording} disabled={recording}>
+                  {recording ? '请按键...' : '修改快捷键'}
+                </Button>
+                <Button size="xs" variant="outline" onClick={resetShortcut}>
+                  恢复默认
+                </Button>
+              </div>
+
+              {recording && (
+                <div className="text-sm text-[var(--accent)] animate-pulse">
+                  请按下新的快捷键组合...
+                </div>
+              )}
+
+              {recordedKeys.length > 0 && (
+                <div className="text-sm font-mono text-[var(--text-primary)]">
+                  {recordedKeys.join(' + ')}
+                </div>
+              )}
             </div>
           </div>
+        </section>
 
-          {shortcutConflict && (
-            <div className="text-xs text-[var(--danger)] bg-red-900/10 px-3 py-1.5 rounded">
-              当前快捷键可能与其他应用冲突
+        {/* 通用 */}
+        <section>
+          <div className="text-xs font-medium text-[var(--text-muted)] px-1 mb-1.5">通用</div>
+          <div className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] divide-y divide-[var(--border-color)]">
+            <div className="flex items-center justify-between px-4 py-3 opacity-50">
+              <div>
+                <div className="text-sm font-medium text-[var(--text-primary)]">自动检查更新</div>
+                <div className="text-xs text-[var(--text-muted)] mt-0.5">启动时检查新版本</div>
+              </div>
+              <Switch checked={false} onCheckedChange={() => {}} disabled />
             </div>
-          )}
 
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-[var(--text-secondary)]">启用快捷键</span>
-            <Switch
-              checked={shortcutEnabled}
-              onCheckedChange={(checked) => setShortcutEnabled(checked)}
-            />
-          </div>
-
-          <div className="flex gap-2 pt-1">
-            <Button size="sm" variant="outline" onClick={startRecording} disabled={recording}>
-              {recording ? '请按键...' : '修改快捷键'}
-            </Button>
-            <Button size="sm" variant="ghost" onClick={resetShortcut}>
-              恢复默认
-            </Button>
-          </div>
-
-          {recording && (
-            <div className="text-sm text-[var(--accent)] animate-pulse">
-              请按下新的快捷键组合...
+            <div className="flex items-center justify-between px-4 py-3 opacity-50">
+              <div>
+                <div className="text-sm font-medium text-[var(--text-primary)]">开机启动</div>
+                <div className="text-xs text-[var(--text-muted)] mt-0.5">系统启动时自动运行</div>
+              </div>
+              <Switch checked={false} onCheckedChange={() => {}} disabled />
             </div>
-          )}
-
-          {recordedKeys.length > 0 && (
-            <div className="text-sm font-mono text-[var(--text-primary)]">
-              {recordedKeys.join(' + ')}
-            </div>
-          )}
-        </div>
-
-        {/* 占位设置 */}
-        <div className="flex items-center justify-between opacity-50">
-          <div>
-            <div className="text-sm font-medium text-[var(--text-primary)]">自动检查更新</div>
-            <div className="text-xs text-[var(--text-muted)] mt-0.5">启动时检查新版本</div>
           </div>
-          <Switch checked={false} onCheckedChange={() => {}} disabled />
-        </div>
-
-        <div className="flex items-center justify-between opacity-50">
-          <div>
-            <div className="text-sm font-medium text-[var(--text-primary)]">开机启动</div>
-            <div className="text-xs text-[var(--text-muted)] mt-0.5">系统启动时自动运行</div>
-          </div>
-          <Switch checked={false} onCheckedChange={() => {}} disabled />
-        </div>
+        </section>
       </div>
     </div>
   );

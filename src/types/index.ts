@@ -56,3 +56,6 @@ export interface ShortcutConflictEvent {
 
 /** 应用主题 */
 export type Theme = 'dark' | 'light';
+
+/** 主题模式（system = 跟随系统） */
+export type ThemeMode = Theme | 'system';

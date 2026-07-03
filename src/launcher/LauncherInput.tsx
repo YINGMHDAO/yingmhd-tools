@@ -13,7 +13,10 @@ export function LauncherInput() {
   }, [reset]);
 
   return (
-    <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--border-color)]">
+    <div
+      data-tauri-drag-region
+      className="flex items-center gap-3 px-4 py-3 border-b border-[var(--border-color)]"
+    >
       <Search size={18} className="text-[var(--text-muted)] shrink-0" />
       <input
         ref={inputRef}

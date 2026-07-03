@@ -15,10 +15,12 @@ function ResultItem({
   item,
   isSelected,
   onClick,
+  onHover,
 }: {
   item: SearchItem;
   isSelected: boolean;
   onClick: () => void;
+  onHover: () => void;
 }) {
   const plugin = item.type === 'plugin' ? pluginManager.getPlugin(item.id) : null;
   const Icon = plugin ? getIcon(plugin.icon) : LucideIcons.Terminal;
@@ -26,8 +28,9 @@ function ResultItem({
   return (
     <button
       onClick={onClick}
+      onMouseEnter={onHover}
       className={cn(
-        'w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-75',
+        'w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-75 cursor-pointer',
         isSelected ? 'bg-[var(--accent)] text-white' : 'text-[var(--text-primary)] hover:bg-[var(--bg-hover)]',
       )}
     >
@@ -45,16 +48,6 @@ function ResultItem({
           </div>
         )}
       </div>
-      {item.type === 'command' && (
-        <span
-          className={cn(
-            'text-xs shrink-0',
-            isSelected ? 'text-white/70' : 'text-[var(--text-muted)]',
-          )}
-        >
-          命令
-        </span>
-      )}
       {item.type === 'plugin' && (
         <span
           className={cn(
@@ -69,8 +62,8 @@ function ResultItem({
   );
 }
 
-export function LauncherResults() {
-  const { results, selectedIndex } = useCommandStore();
+export function LauncherResults({ onExecute }: { onExecute: (item: SearchItem) => void }) {
+  const { results, selectedIndex, setSelectedIndex } = useCommandStore();
 
   if (results.length === 0) {
     return (
@@ -87,9 +80,8 @@ export function LauncherResults() {
           key={item.id}
           item={item}
           isSelected={index === selectedIndex}
-          onClick={() => {
-            // 点击事件由父组件 Launcher 统一处理
-          }}
+          onClick={() => onExecute(item)}
+          onHover={() => setSelectedIndex(index)}
         />
       ))}
     </div>

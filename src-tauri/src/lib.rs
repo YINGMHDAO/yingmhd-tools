@@ -4,7 +4,7 @@ mod utils;
 
 use tauri::Emitter;
 use tauri::Manager;
-use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut};
+use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 use utils::platform;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -53,33 +53,45 @@ pub fn run() {
         .expect("error while running tauri application");
 }
 
-fn setup_global_shortcut(app: &tauri::App) {
+/// 注册全局快捷键并绑定窗口显隐切换（只响应按下事件）
+pub fn register_toggle_shortcut(
+    app: &tauri::AppHandle,
+    shortcut: Shortcut,
+) -> Result<(), tauri_plugin_global_shortcut::Error> {
     let window = app.get_webview_window("main").unwrap();
+    app.global_shortcut()
+        .on_shortcut(shortcut, move |_app, _shortcut, event| {
+            // 回调在按下和松开时各触发一次，只处理按下，避免 toggle 两次抵消
+            if event.state() != ShortcutState::Pressed {
+                return;
+            }
+            if window.is_visible().unwrap_or(false) {
+                window.hide().ok();
+            } else {
+                window.show().ok();
+                window.set_focus().ok();
+                // 短暂置顶确保窗口到最前，延迟复位放到后台线程，避免阻塞事件线程
+                window.set_always_on_top(true).ok();
+                let w = window.clone();
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_millis(200));
+                    w.set_always_on_top(false).ok();
+                });
+            }
+        })
+}
+
+fn setup_global_shortcut(app: &tauri::App) {
     let shortcut_str = platform::default_shortcut_string();
 
-    #[cfg(target_os = "macos")]
-    let shortcut = Shortcut::new(Some(Modifiers::ALT), Code::Space);
-    #[cfg(target_os = "windows")]
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
     let shortcut = Shortcut::new(Some(Modifiers::ALT), Code::Space);
     #[cfg(not(any(target_os = "macos", target_os = "windows")))]
     let shortcut = Shortcut::new(Some(Modifiers::CONTROL), Code::Space);
 
     let effective_shortcut = load_stored_shortcut(app).unwrap_or(shortcut);
 
-    match app.global_shortcut().on_shortcut(effective_shortcut.clone(), {
-        let window = window.clone();
-        move |_app, _shortcut, _event| {
-            if window.is_visible().unwrap_or(false) {
-                window.hide().ok();
-            } else {
-                window.show().ok();
-                window.set_focus().ok();
-                window.set_always_on_top(true).ok();
-                std::thread::sleep(std::time::Duration::from_millis(200));
-                window.set_always_on_top(false).ok();
-            }
-        }
-    }) {
+    match register_toggle_shortcut(app.handle(), effective_shortcut) {
         Ok(_) => {
             log::info!("Global shortcut registered: {}", shortcut_str);
         }

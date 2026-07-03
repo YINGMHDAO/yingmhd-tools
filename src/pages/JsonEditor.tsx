@@ -113,7 +113,10 @@ export function JsonEditorPage() {
   return (
     <div className="h-full flex flex-col">
       {/* 顶部导航栏 */}
-      <header className="flex items-center gap-3 px-4 h-12 border-b border-[var(--border-color)] bg-[var(--bg-secondary)] shrink-0">
+      <header
+        data-tauri-drag-region
+        className="flex items-center gap-3 px-4 h-12 border-b border-[var(--border-color)] bg-[var(--bg-secondary)] shrink-0"
+      >
         <button
           onClick={() => navigate('/')}
           className="flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
