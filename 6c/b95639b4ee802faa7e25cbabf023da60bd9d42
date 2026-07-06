@@ -1,0 +1,45 @@
+src/pages/Dashboard.tsx
+  s_9f1ab51b05aca6::t_76203d3d41b4b2 37-43
+src/stores/appStore.ts
+  s_9f1ab51b05aca6::t_6820f4f2945a2b 10,18
+  s_9f1ab51b05aca6::t_4f0413315179b1 32
+  s_9f1ab51b05aca6::t_18f2c4d4add448 48-49
+src/pages/Settings.tsx
+  s_9f1ab51b05aca6::t_b37325532311b6 13-21,40-53,111-121,245-254
+  s_9f1ab51b05aca6::t_bcd0964329a142 138-141
+src-tauri/src/lib.rs
+  s_9f1ab51b05aca6::t_e4f984634b36fa 5-6,12-13
+  s_9f1ab51b05aca6::t_0ebaa3dc1a0198 70-71
+  s_9f1ab51b05aca6::t_788e2cc182081d 39-40,43-44,48-59
+  s_9f1ab51b05aca6::t_813bdf90af0c0f 133-143
+src-tauri/src/commands/mod.rs
+  s_9f1ab51b05aca6::t_c36781acaebf71 2
+src-tauri/src/commands/port.rs
+  s_9f1ab51b05aca6::t_87d1bd34990b0e 5
+src/launcher/Launcher.tsx
+  s_9f1ab51b05aca6::t_46be9e4f3a565b 93
+src/pages/PortManager.tsx
+  s_9f1ab51b05aca6::t_a3106bc16b04a6 74
+src-tauri/src/commands/settings.rs
+  s_9f1ab51b05aca6::t_b2618e460e6de3 1-34
+src/pages/JsonEditor.tsx
+  s_9f1ab51b05aca6::t_b23294fb8908fc 128
+src-tauri/capabilities/default.json
+  s_9f1ab51b05aca6::t_a8c005ecb1797f 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "ai_metrics_version": "1.5.3",
+  "base_commit_sha": "6cb95639b4ee802faa7e25cbabf023da60bd9d42",
+  "prompts": {},
+  "sessions": {
+    "s_9f1ab51b05aca6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c81ce825-0c12-460b-a8d9-626e56acdc3a",
+        "model": "claude-fable-5"
+      },
+      "human_author": "YINGMHD <1942506359@qq.com>"
+    }
+  }
+}
