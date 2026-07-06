@@ -1,0 +1,20 @@
+package.json
+  s_9f1ab51b05aca6::t_fbd9176172dc63 3
+  s_9f1ab51b05aca6::t_69018967a657f0 37,49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "ai_metrics_version": "1.5.3",
+  "base_commit_sha": "a59a3c83bb8c4bc6dea6a8846af4a7299ed8326c",
+  "prompts": {},
+  "sessions": {
+    "s_9f1ab51b05aca6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c81ce825-0c12-460b-a8d9-626e56acdc3a",
+        "model": "claude-fable-5"
+      },
+      "human_author": "YINGMHD <1942506359@qq.com>"
+    }
+  }
+}
