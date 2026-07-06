@@ -1,0 +1,36 @@
+src/monaco.ts
+  s_9f1ab51b05aca6::t_4f0211476722f5 1-15
+src/utils/json.ts
+  s_9f1ab51b05aca6::t_cdd1d4f03efba7 1-21
+src/pages/JsonEditor.tsx
+  s_9f1ab51b05aca6::t_4cf6a829697b43 61-62
+  s_9f1ab51b05aca6::t_3e50b1e4b46fce 160
+  s_9f1ab51b05aca6::t_b6ac19c8ac36f3 72-73
+  s_9f1ab51b05aca6::t_655d0c95314158 9
+  s_9f1ab51b05aca6::t_07795cc0450337 2,176,202
+  s_9f1ab51b05aca6::t_c5acfa4f1b66ed 186
+  s_9f1ab51b05aca6::t_853cf412f1448d 83-84
+src-tauri/tauri.conf.json
+  s_9f1ab51b05aca6::t_e6ea086317769a 38-39
+package.json
+  s_9f1ab51b05aca6::t_f96b778e89e08c 53
+  s_9f1ab51b05aca6::t_e15dbd0023169a 55
+  s_9f1ab51b05aca6::t_19ebe05ad9bbff 39,41,50,52,54,58-61,64-65
+  s_9f1ab51b05aca6::t_98fccead640c5a 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "ai_metrics_version": "1.5.3",
+  "base_commit_sha": "8722ceef415f229ccec76d9e73d1e8ed91efbda7",
+  "prompts": {},
+  "sessions": {
+    "s_9f1ab51b05aca6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c81ce825-0c12-460b-a8d9-626e56acdc3a",
+        "model": "claude-fable-5"
+      },
+      "human_author": "YINGMHD <1942506359@qq.com>"
+    }
+  }
+}
