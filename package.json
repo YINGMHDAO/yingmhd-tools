@@ -1,6 +1,6 @@
 {
   "name": "yingmhd-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "macOS / Windows 通用的开发者工具启动器,类 uTools 的插件化桌面效率工具",
   "license": "MIT",
   "repository": {
@@ -34,7 +34,7 @@
     "tauri:build": "tauri build",
     "npm:prepare": "npm run tauri:build && rm -rf binaries && mkdir -p binaries/macos && cp -R src-tauri/target/release/bundle/macos/*.app binaries/macos/"
   },
-  "dependencies": {
+  "devDependencies": {
     "@monaco-editor/react": "^4.7.0",
     "@tauri-apps/api": "^2.11.1",
     "@tauri-apps/plugin-global-shortcut": "^2.3.2",
@@ -46,9 +46,7 @@
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.0",
     "tailwind-merge": "^3.6.0",
-    "zustand": "^5.0.14"
-  },
-  "devDependencies": {
+    "zustand": "^5.0.14",
     "@tailwindcss/vite": "^4.3.1",
     "@tauri-apps/cli": "^2.11.3",
     "@types/node": "^24.13.2",
