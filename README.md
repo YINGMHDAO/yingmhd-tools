@@ -42,13 +42,14 @@
 ### 方式一:Homebrew(推荐)
 
 ```bash
-# 安装
-brew tap yingmhdao/tap
-brew install --cask yingmhd-tools
+# 安装(会自动添加 yingmhdao/tap 仓库)
+brew install --cask yingmhdao/tap/yingmhd-tools
 
 # 卸载
 brew uninstall --cask yingmhd-tools
 ```
+
+> 较新版本的 Homebrew 首次使用第三方仓库时会提示确认,按提示执行 `brew trust yingmhdao/tap` 后重新安装即可。
 
 ### 方式二:DMG 安装包
 
