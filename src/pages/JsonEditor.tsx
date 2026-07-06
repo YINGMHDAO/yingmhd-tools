@@ -1,10 +1,12 @@
 import { useCallback, useRef } from 'react';
+import '@/monaco';
 import Editor, { type OnMount } from '@monaco-editor/react';
 import type { editor } from 'monaco-editor';
 import { ArrowLeft, Braces, Minimize2, Copy, Eraser, FileCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useJsonStore } from '@/stores/jsonStore';
 import { useAppStore } from '@/stores/appStore';
+import { jsonErrorMessage } from '@/utils/json';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -56,18 +58,8 @@ export function JsonEditorPage() {
       const formatted = JSON.stringify(parsed, null, 2);
       setOutput(formatted);
       setError(null);
-    } catch (e) {
-      const err = e as SyntaxError;
-      const match = err.message.match(/position (\d+)/);
-      let line = 0;
-      let col = 0;
-      if (match) {
-        const pos = parseInt(match[1], 10);
-        const lines = input.substring(0, pos).split('\n');
-        line = lines.length;
-        col = lines[lines.length - 1].length + 1;
-      }
-      setError(`JSON 格式错误 — 第 ${line} 行，第 ${col} 列`);
+    } catch {
+      setError(jsonErrorMessage(input));
     }
   }, [input, setOutput, setError]);
 
@@ -77,9 +69,8 @@ export function JsonEditorPage() {
       const parsed = JSON.parse(input);
       setOutput(JSON.stringify(parsed));
       setError(null);
-    } catch (e) {
-      const err = e as SyntaxError;
-      setError(`JSON 格式错误: ${err.message}`);
+    } catch {
+      setError(jsonErrorMessage(input));
     }
   }, [input, setOutput, setError]);
 
@@ -89,9 +80,8 @@ export function JsonEditorPage() {
       JSON.parse(input);
       setError(null);
       addToast('JSON 格式正确 ✓', 'success');
-    } catch (e) {
-      const err = e as SyntaxError;
-      setError(`JSON 格式错误: ${err.message}`);
+    } catch {
+      setError(jsonErrorMessage(input));
     }
   }, [input, setError, addToast]);
 
@@ -167,7 +157,7 @@ export function JsonEditorPage() {
           <div className="px-3 py-1 text-xs text-[var(--text-muted)] bg-[var(--bg-tertiary)] border-b border-[var(--border-color)] shrink-0">
             输入
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-h-0 overflow-hidden">
             <Editor
               height="100%"
               defaultLanguage="json"
@@ -183,8 +173,7 @@ export function JsonEditorPage() {
                 fontFamily: "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace",
                 tabSize: 2,
                 automaticLayout: true,
-                bracketPairColorization: { enabled: true },
-              }}
+                bracketPairColorization: { enabled: true },              }}
             />
           </div>
         </div>
@@ -194,7 +183,7 @@ export function JsonEditorPage() {
           <div className="px-3 py-1 text-xs text-[var(--text-muted)] bg-[var(--bg-tertiary)] border-b border-[var(--border-color)] shrink-0">
             输出
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-h-0 overflow-hidden">
             <Editor
               height="100%"
               defaultLanguage="json"
@@ -210,8 +199,7 @@ export function JsonEditorPage() {
                 fontFamily: "'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace",
                 tabSize: 2,
                 automaticLayout: true,
-                domReadOnly: true,
-              }}
+                domReadOnly: true,              }}
             />
           </div>
         </div>

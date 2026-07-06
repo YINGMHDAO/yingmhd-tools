@@ -35,7 +35,8 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob: data:; font-src 'self' data:; img-src 'self' data:"
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob: data:; font-src 'self' data:; img-src 'self' data:",
+      "dangerousDisableAssetCspModification": ["style-src"]
     }
   },
   "bundle": {
