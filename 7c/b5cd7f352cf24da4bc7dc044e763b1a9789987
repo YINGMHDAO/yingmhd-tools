@@ -1,0 +1,20 @@
+.github/workflows/release.yml
+  s_9f1ab51b05aca6::t_90cbe5ea9ccfaa 26,56
+  s_9f1ab51b05aca6::t_04c9d267965e92 59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "ai_metrics_version": "1.5.3",
+  "base_commit_sha": "7cb5cd7f352cf24da4bc7dc044e763b1a9789987",
+  "prompts": {},
+  "sessions": {
+    "s_9f1ab51b05aca6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c81ce825-0c12-460b-a8d9-626e56acdc3a",
+        "model": "claude-fable-5"
+      },
+      "human_author": "YINGMHD <1942506359@qq.com>"
+    }
+  }
+}
