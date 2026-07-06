@@ -71,7 +71,7 @@ export function PortManagerPage() {
           <span>返回</span>
         </button>
         <span className="text-sm font-semibold text-[var(--text-primary)]">Port Manager</span>
-        <div className="flex-1" />
+        <div data-tauri-drag-region className="flex-1" />
       </header>
 
       {/* 搜索栏 */}

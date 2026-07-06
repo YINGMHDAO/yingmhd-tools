@@ -10,8 +10,15 @@ import { cn } from '@/utils/cn';
 export function Settings() {
   const navigate = useNavigate();
   const { theme, themeMode, setMode } = useTheme();
-  const { shortcut, setShortcut, setShortcutEnabled, shortcutEnabled, shortcutConflict } =
-    useAppStore();
+  const {
+    shortcut,
+    setShortcut,
+    setShortcutEnabled,
+    shortcutEnabled,
+    shortcutConflict,
+    hideOnBlur,
+    setHideOnBlur,
+  } = useAppStore();
   const [recording, setRecording] = useState(false);
   const [recordedKeys, setRecordedKeys] = useState<string[]>([]);
   const addToast = useAppStore((s) => s.addToast);
@@ -29,6 +36,20 @@ export function Settings() {
     };
     loadShortcut();
   }, [setShortcut]);
+
+  // 加载失焦自动隐藏开关状态
+  useEffect(() => {
+    const loadHideOnBlur = async () => {
+      try {
+        const { invoke } = await import('@tauri-apps/api/core');
+        const enabled = await invoke<boolean>('get_hide_on_blur');
+        setHideOnBlur(enabled);
+      } catch {
+        // 非 Tauri 环境
+      }
+    };
+    loadHideOnBlur();
+  }, [setHideOnBlur]);
 
   // 开始录制快捷键
   const startRecording = useCallback(() => {
@@ -87,6 +108,17 @@ export function Settings() {
     }
   };
 
+  // 切换失焦自动隐藏
+  const toggleHideOnBlur = async (enabled: boolean) => {
+    try {
+      const { invoke } = await import('@tauri-apps/api/core');
+      await invoke('set_hide_on_blur', { enabled });
+      setHideOnBlur(enabled);
+    } catch (err) {
+      addToast(`设置失败: ${String(err)}`, 'error');
+    }
+  };
+
   // 恢复默认快捷键
   const resetShortcut = async () => {
     try {
@@ -103,7 +135,10 @@ export function Settings() {
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)]">
       {/* 顶部导航栏 */}
-      <header className="flex items-center gap-3 px-4 h-12 border-b border-[var(--border-color)] bg-[var(--bg-secondary)] shrink-0">
+      <header
+        data-tauri-drag-region
+        className="flex items-center gap-3 px-4 h-12 border-b border-[var(--border-color)] bg-[var(--bg-secondary)] shrink-0"
+      >
         <button
           onClick={() => navigate('/')}
           className="flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
@@ -207,6 +242,16 @@ export function Settings() {
         <section>
           <div className="text-xs font-medium text-[var(--text-muted)] px-1 mb-1.5">通用</div>
           <div className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] divide-y divide-[var(--border-color)]">
+            <div className="flex items-center justify-between px-4 py-3">
+              <div>
+                <div className="text-sm font-medium text-[var(--text-primary)]">失焦自动隐藏</div>
+                <div className="text-xs text-[var(--text-muted)] mt-0.5">
+                  窗口失去焦点时自动隐藏
+                </div>
+              </div>
+              <Switch checked={hideOnBlur} onCheckedChange={toggleHideOnBlur} />
+            </div>
+
             <div className="flex items-center justify-between px-4 py-3 opacity-50">
               <div>
                 <div className="text-sm font-medium text-[var(--text-primary)]">自动检查更新</div>

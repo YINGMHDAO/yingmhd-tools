@@ -7,6 +7,7 @@ interface AppState {
   shortcut: string;
   shortcutEnabled: boolean;
   shortcutConflict: boolean;
+  hideOnBlur: boolean;
   toasts: Toast[];
 
   setTheme: (theme: Theme) => void;
@@ -14,6 +15,7 @@ interface AppState {
   setShortcut: (shortcut: string) => void;
   setShortcutEnabled: (enabled: boolean) => void;
   setShortcutConflict: (conflict: boolean) => void;
+  setHideOnBlur: (enabled: boolean) => void;
   addToast: (message: string, type: ToastType) => void;
   removeToast: (id: string) => void;
 }
@@ -27,6 +29,7 @@ export const useAppStore = create<AppState>((set) => ({
   shortcut: '',
   shortcutEnabled: true,
   shortcutConflict: false,
+  hideOnBlur: true,
   toasts: [],
 
   setTheme: (theme) => {
@@ -41,6 +44,8 @@ export const useAppStore = create<AppState>((set) => ({
   setShortcutEnabled: (shortcutEnabled) => set({ shortcutEnabled }),
 
   setShortcutConflict: (shortcutConflict) => set({ shortcutConflict }),
+
+  setHideOnBlur: (hideOnBlur) => set({ hideOnBlur }),
 
   addToast: (message, type) => {
     const id = `toast-${++toastId}`;

@@ -90,7 +90,7 @@ export function Launcher() {
   }, [selectNext, selectPrev, executeSelected]);
 
   return (
-    <div className="flex flex-col h-full bg-[var(--launcher-bg)]">
+    <div data-tauri-drag-region className="flex flex-col h-full bg-[var(--launcher-bg)]">
       <LauncherInput />
       <LauncherResults onExecute={executeItem} />
     </div>

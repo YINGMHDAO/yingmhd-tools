@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::process::Command;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PortInfo {
     pub port: u16,
     pub pid: u32,

@@ -2,10 +2,15 @@ mod commands;
 mod tray;
 mod utils;
 
+use std::sync::atomic::{AtomicBool, Ordering};
+
 use tauri::Emitter;
 use tauri::Manager;
 use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 use utils::platform;
+
+/// 「失焦自动隐藏」运行时开关，随设置命令实时更新
+pub struct HideOnBlur(pub AtomicBool);
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -31,13 +36,27 @@ pub fn run() {
 
             setup_global_shortcut(app);
 
+            app.manage(HideOnBlur(AtomicBool::new(load_stored_hide_on_blur(app))));
+
             let window = app.get_webview_window("main").unwrap();
             let window_clone = window.clone();
-            window.on_window_event(move |event| {
-                if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+            window.on_window_event(move |event| match event {
+                tauri::WindowEvent::CloseRequested { api, .. } => {
                     api.prevent_close();
                     window_clone.hide().ok();
                 }
+                tauri::WindowEvent::Focused(false) => {
+                    // debug 构建下打开 devtools 会使主窗口失焦，跳过避免开发时窗口不断消失
+                    #[cfg(debug_assertions)]
+                    if window_clone.is_devtools_open() {
+                        return;
+                    }
+                    let state = window_clone.app_handle().state::<HideOnBlur>();
+                    if state.0.load(Ordering::Relaxed) {
+                        window_clone.hide().ok();
+                    }
+                }
+                _ => {}
             });
 
             Ok(())
@@ -48,6 +67,8 @@ pub fn run() {
             commands::shortcut::get_shortcut,
             commands::shortcut::set_shortcut,
             commands::shortcut::get_default_shortcut,
+            commands::settings::get_hide_on_blur,
+            commands::settings::set_hide_on_blur,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -107,6 +128,17 @@ fn setup_global_shortcut(app: &tauri::App) {
             .ok();
         }
     }
+}
+
+fn load_stored_hide_on_blur(app: &tauri::App) -> bool {
+    use tauri_plugin_store::StoreBuilder;
+
+    StoreBuilder::new(app.handle(), "settings.json")
+        .build()
+        .ok()
+        .and_then(|store| store.get("hide_on_blur"))
+        .and_then(|v| v.as_bool())
+        .unwrap_or(true)
 }
 
 fn load_stored_shortcut(app: &tauri::App) -> Option<Shortcut> {

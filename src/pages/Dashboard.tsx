@@ -34,9 +34,13 @@ export function Dashboard() {
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)]">
       {/* 顶部 */}
-      <header className="px-6 py-8 text-center shrink-0">
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">YINGMHD Tools</h1>
-        <p className="mt-1 text-sm text-[var(--text-muted)]">Developer Launcher v0.1.0</p>
+      <header data-tauri-drag-region className="px-6 py-8 text-center shrink-0">
+        <h1 data-tauri-drag-region className="text-2xl font-bold text-[var(--text-primary)]">
+          YINGMHD Tools
+        </h1>
+        <p data-tauri-drag-region className="mt-1 text-sm text-[var(--text-muted)]">
+          Developer Launcher v0.1.0
+        </p>
       </header>
 
       {/* 系统信息 */}
