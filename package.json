@@ -1,8 +1,29 @@
 {
   "name": "yingmhd-tools",
-  "private": true,
   "version": "0.1.0",
+  "description": "macOS / Windows 通用的开发者工具启动器,类 uTools 的插件化桌面效率工具",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YINGMHDAO/yingmhd-tools.git"
+  },
+  "homepage": "https://github.com/YINGMHDAO/yingmhd-tools#readme",
+  "keywords": [
+    "utools",
+    "launcher",
+    "tauri",
+    "devtools",
+    "json",
+    "port"
+  ],
   "type": "module",
+  "bin": {
+    "yingmhd-tools": "bin/yingmhd-tools.js"
+  },
+  "files": [
+    "bin",
+    "binaries"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +31,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri:build": "tauri build",
+    "npm:prepare": "npm run tauri:build && rm -rf binaries && mkdir -p binaries/macos && cp -R src-tauri/target/release/bundle/macos/*.app binaries/macos/"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
