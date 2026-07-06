@@ -14,7 +14,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 检查版本号是否变动:以 tauri.conf.json 的 version 为准,
+  # 检查版本号是否变动:以 package.json 的 version 为准
+  # (tauri.conf.json 的 version 指向 package.json,单一版本源),
   # 若 v<version> 标签已存在则跳过发布
   check-version:
     runs-on: ubuntu-latest
@@ -27,7 +28,7 @@ jobs:
       - name: 检查版本对应的 tag 是否已存在
         id: check
         run: |
-          VERSION=$(jq -r .version src-tauri/tauri.conf.json)
+          VERSION=$(jq -r .version package.json)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null 2>&1; then
             echo "should_release=false" >> "$GITHUB_OUTPUT"
