@@ -1,0 +1,19 @@
+README.md
+  s_9f1ab51b05aca6::t_4348d181ed10c0 45-46,52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "ai_metrics_version": "1.5.3",
+  "base_commit_sha": "da6d48614998249cccdfeb91ac32ada912780536",
+  "prompts": {},
+  "sessions": {
+    "s_9f1ab51b05aca6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c81ce825-0c12-460b-a8d9-626e56acdc3a",
+        "model": "claude-fable-5"
+      },
+      "human_author": "YINGMHD <1942506359@qq.com>"
+    }
+  }
+}
